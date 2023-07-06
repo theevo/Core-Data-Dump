@@ -4,6 +4,6 @@
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="UserSettings" representedClassName="UserSettings" syncable="YES" codeGenerationType="class">
-        <attribute name="numbers" optional="YES" attributeType="Transformable" customClassName="[Int]"/>
+        <attribute name="numbers" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Int]"/>
     </entity>
 </model>
