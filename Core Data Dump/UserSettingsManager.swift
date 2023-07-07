@@ -21,6 +21,10 @@ class UserSettingsManager {
         userSettings.uuids ?? []
     }
     
+    var hasChanges: Bool {
+        controller.container.viewContext.hasChanges
+    }
+    
     init(inMemory: Bool = false) {
         self.controller = inMemory ? PersistenceController.preview : PersistenceController.shared 
         let fetchRequest = UserSettings.fetchRequest()
@@ -49,6 +53,11 @@ class UserSettingsManager {
     
     func set(numbers: [Int]) {
         userSettings.numbers = numbers
+        save()
+    }
+    
+    func set(uuids: [UUID]) {
+        userSettings.uuids = uuids
         save()
     }
     

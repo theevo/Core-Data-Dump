@@ -21,13 +21,16 @@ final class UserSettingsManagerTests: XCTestCase {
         XCTAssertEqual(sut.uuids, [])
     }
     
-    func test_recall() {
+    func test_set_doesNotResultInUncommittedChanges() {
+        let sut = makeSUT()
+
         let someArray = [999]
-        var sut: UserSettingsManager? = makeSUT()
-        sut?.set(numbers: someArray)
-        sut = nil
-        sut = makeSUT()
-        XCTAssertEqual(sut?.numbers, someArray)
+        sut.set(numbers: someArray)
+
+        let someUUIDArray = [UUID()]
+        sut.set(uuids: someUUIDArray)
+        
+        XCTAssertFalse(sut.hasChanges, "expected false, got true. Are we sure we saved the data?")
     }
     
     // MARK: - Helpers
