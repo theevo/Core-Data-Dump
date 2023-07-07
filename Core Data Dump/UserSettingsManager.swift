@@ -11,14 +11,14 @@ import CoreData
 class UserSettingsManager {
     var numbers: [Int]
     var uuids: [UUID]
-    var moc: NSManagedObjectContext
+    var controller: PersistenceController
     
     init() {
-        self.moc = PersistenceController.shared.container.viewContext
+        self.controller = PersistenceController.shared
         let fetchRequest = UserSettings.fetchRequest()
         
         do {
-            let settings = try moc.fetch(fetchRequest)
+            let settings = try controller.container.viewContext.fetch(fetchRequest)
             
             if settings.notEmpty,
                let first = settings.first {
@@ -54,7 +54,7 @@ class UserSettingsManager {
             } else {
                 self.numbers = [1, 2, 3]
                 self.uuids = [UUID()]
-                let setting = UserSettings(context: moc)
+                let setting = UserSettings(context: controller.container.viewContext)
                 setting.numbers = self.numbers
                 save()
                 print("🪄 creating settings in Core Data")
@@ -70,7 +70,7 @@ class UserSettingsManager {
     }
     
     func save() {
-        try? moc.save()
+        try? controller.container.viewContext.save()
     }
 }
 
