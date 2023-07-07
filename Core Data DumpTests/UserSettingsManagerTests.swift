@@ -15,6 +15,12 @@ final class UserSettingsManagerTests: XCTestCase {
         XCTAssertTrue(((url?.absoluteString.contains("/dev/null")) != nil))
     }
     
+    func test_properties_startEmpty() {
+        let sut = makeSUT()
+        XCTAssertEqual(sut.numbers, [])
+        XCTAssertEqual(sut.uuids, [])
+    }
+    
     // MARK: - Helpers
     func makeSUT() -> UserSettingsManager {
         UserSettingsManager(inMemory: true)

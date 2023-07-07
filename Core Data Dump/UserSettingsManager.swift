@@ -52,8 +52,8 @@ class UserSettingsManager {
                 first.uuids = self.uuids
                 save()
             } else {
-                self.numbers = [1, 2, 3]
-                self.uuids = [UUID()]
+                self.numbers = []
+                self.uuids = []
                 let setting = UserSettings(context: controller.container.viewContext)
                 setting.numbers = self.numbers
                 save()
