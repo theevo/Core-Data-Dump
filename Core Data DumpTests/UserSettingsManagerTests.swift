@@ -21,6 +21,15 @@ final class UserSettingsManagerTests: XCTestCase {
         XCTAssertEqual(sut.uuids, [])
     }
     
+    func test_recall() {
+        let someArray = [999]
+        var sut: UserSettingsManager? = makeSUT()
+        sut?.set(numbers: someArray)
+        sut = nil
+        sut = makeSUT()
+        XCTAssertEqual(sut?.numbers, someArray)
+    }
+    
     // MARK: - Helpers
     func makeSUT() -> UserSettingsManager {
         UserSettingsManager(inMemory: true)

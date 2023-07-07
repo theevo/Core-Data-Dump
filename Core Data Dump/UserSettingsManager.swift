@@ -9,9 +9,17 @@ import Foundation
 import CoreData
 
 class UserSettingsManager {
-    var numbers: [Int]
-    var uuids: [UUID]
     var controller: PersistenceController
+
+    private var userSettings: UserSettings
+    
+    var numbers: [Int] {
+        userSettings.numbers ?? []
+    }
+    
+    var uuids: [UUID] {
+        userSettings.uuids ?? []
+    }
     
     init(inMemory: Bool = false) {
         self.controller = inMemory ? PersistenceController.preview : PersistenceController.shared 
@@ -22,51 +30,26 @@ class UserSettingsManager {
             
             if settings.notEmpty,
                let first = settings.first {
-               
-                if let nums = first.numbers {
-                    print("😮 retrieved settings from Core Data")
-                    print("#️⃣ nums =", nums)
-                    self.numbers = nums
-                }
-                
-                if let ids = first.uuids {
-                    let prettyIds = ids.map { $0.last4 }
-                    print("🆔 uuids =", prettyIds)
-                    self.uuids = ids
-                } else { // possible this could be nil on first run, since the 1 existing instance will not have this new property. better add it.
-                    self.uuids = [UUID()]
-                }
-                
-                print("🎩 now changing it to...")
-                var newArr: [Int] = [
-                    Int.random(in: (0...9)),
-                    Int.random(in: (0...9)),
-                    Int.random(in: (0...9))
-                ]
-                self.numbers = newArr
-                
-                var newIds = [UUID(), UUID(), UUID()]
-                self.uuids = newIds
-                
-                first.numbers = self.numbers
-                first.uuids = self.uuids
-                save()
+                self.userSettings = first
             } else {
-                self.numbers = []
-                self.uuids = []
-                let setting = UserSettings(context: controller.container.viewContext)
-                setting.numbers = self.numbers
-                save()
                 print("🪄 creating settings in Core Data")
+                let setting = UserSettings(context: controller.container.viewContext)
+                self.userSettings = setting
+                save()
             }
             print("#️⃣ numbers =", numbers)
             print("🆔 uuids =", uuids.map { $0.last4 })
         } catch {
             print("😫 wah wah", error)
             print(error.localizedDescription)
-            self.numbers = []
-            self.uuids = []
+            self.userSettings = UserSettings(context: controller.container.viewContext)
+            save()
         }
+    }
+    
+    func set(numbers: [Int]) {
+        userSettings.numbers = numbers
+        save()
     }
     
     func save() {
