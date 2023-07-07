@@ -16,7 +16,7 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Item>
     
-    var viewModel = ViewModel()
+    var viewModel = UserSettingsManager()
 
     var body: some View {
         NavigationView {

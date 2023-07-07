@@ -1,5 +1,5 @@
 //
-//  ViewModel.swift
+//  UserSettingsManager.swift
 //  Core Data Dump
 //
 //  Created by Theo Vora on 7/6/23.
@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class ViewModel {
+class UserSettingsManager {
     var numbers: [Int]
     var uuids: [UUID]
     var moc: NSManagedObjectContext
