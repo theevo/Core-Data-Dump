@@ -13,8 +13,8 @@ class UserSettingsManager {
     var uuids: [UUID]
     var controller: PersistenceController
     
-    init() {
-        self.controller = PersistenceController.shared
+    init(inMemory: Bool = false) {
+        self.controller = inMemory ? PersistenceController.preview : PersistenceController.shared 
         let fetchRequest = UserSettings.fetchRequest()
         
         do {

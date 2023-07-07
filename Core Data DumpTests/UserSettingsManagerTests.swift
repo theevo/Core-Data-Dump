@@ -6,9 +6,17 @@
 //
 
 import XCTest
+@testable import Core_Data_Dump
 
 final class UserSettingsManagerTests: XCTestCase {
-    func testZero() {
-        XCTFail("Keep coffee close by.")
+    func test_initWithInMemory_persistentContainerPathIsDevNull() {
+        let sut = makeSUT()
+        let url = sut.controller.container.persistentStoreDescriptions.first?.url
+        XCTAssertTrue(((url?.absoluteString.contains("/dev/null")) != nil))
+    }
+    
+    // MARK: - Helpers
+    func makeSUT() -> UserSettingsManager {
+        UserSettingsManager(inMemory: true)
     }
 }
