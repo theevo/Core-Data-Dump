@@ -21,7 +21,7 @@ class UserSettingsManager {
     }
     
     var numbers: [Int] {
-        userSettings.numbers ?? []
+        userSettings.kitchenSink?["numbers"] as? [Int] ?? []
     }
     
     var uuids: [UUID] {
@@ -59,7 +59,7 @@ class UserSettingsManager {
     }
     
     func set(numbers: [Int]) {
-        userSettings.numbers = numbers
+        userSettings.kitchenSink?["numbers"] = numbers
         save()
     }
     
