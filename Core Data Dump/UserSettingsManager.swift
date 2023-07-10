@@ -13,6 +13,13 @@ class UserSettingsManager {
 
     private var userSettings: UserSettings
     
+    var kitchenSink: [String: Any] {
+        guard let dict = userSettings.kitchenSink else {
+            return [:]
+        }
+        return dict
+    }
+    
     var numbers: [Int] {
         userSettings.numbers ?? []
     }
@@ -58,6 +65,11 @@ class UserSettingsManager {
     
     func set(uuids: [UUID]) {
         userSettings.uuids = uuids
+        save()
+    }
+    
+    func set(kitchenSink: [String: Any]) {
+        userSettings.kitchenSink = kitchenSink
         save()
     }
     
